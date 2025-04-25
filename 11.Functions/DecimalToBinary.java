@@ -23,6 +23,6 @@ public class DecimalToBinary {
         System.out.println("Enter the Decimal number: ");
         int num = sc.nextInt();
 
-        System.out.println(FromDecimalToBinary(num));;
+        System.out.println(FromDecimalToBinary(num));
     }
 }

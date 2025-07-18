@@ -20,5 +20,7 @@ public class PalindromString{
         boolean result = CheckPalindrom(word);
 
         System.out.println(result);
+
+        sc.close();
     }
 }

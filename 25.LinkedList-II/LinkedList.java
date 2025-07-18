@@ -11,8 +11,8 @@ public class LinkedList{
 
     }
 
-    public static Node head;
-    public static Node tail;
+    public Node head;
+    public Node tail;
 
     public void addFirst(int data){
         Node newNode = new Node(data);
@@ -52,7 +52,8 @@ public class LinkedList{
         newNode.next = temp.next;
 
         temp.next = newNode;
-        
+
+
     }
 
     public void print(Node head){
@@ -89,7 +90,7 @@ public class LinkedList{
     }
 
 
-    public Node findMid(Node head){
+    public static Node findMid(Node head){
         Node slow = head;
         Node fast = head;
 
@@ -140,57 +141,112 @@ public class LinkedList{
 
 
 
-    public static boolean detectLoop(){
-        Node slow = head;
-        Node fast = head;
+    public static Node mergeSort(Node head){
 
         if(head == null || head.next == null){
-            return false;
+            return head;
         }
 
-        while(fast.next != null && fast != null){
-            slow = slow.next;
-            fast = fast.next.next;
 
-            if(slow == fast){
-                return true;
-            }
-        }
+        Node mid = findMid(head);
 
-        return false;
+        
+        Node rightHead = mid.next;
+        mid.next = null;
+
+        Node left = mergeSort(head);
+        Node right = mergeSort(rightHead);
+
+        return merge(left, right);
     }
 
+    public static Node merge(Node left, Node right){
+        Node mergedll = new LinkedList().new Node(-1);
+        Node temp = mergedll;
 
-    public static void removeLoop(){
+        while(left != null && right != null){
+            if(left.data > right.data){
+                temp.next = right;
+                right = right.next;
+            }else{
+                temp.next = left;
+                left = left.next;
+            }
+            temp = temp.next;
+        }
+
+        while(left != null){
+            temp.next = left;
+            left = left.next;
+            temp = temp.next;
+        }
+        while(right != null){
+            temp.next = right;
+            right = right.next;
+            temp = temp.next;
+        }
+
+        return mergedll.next;
+    }
+
+    public static Node zigZag(Node head){
+
+        // find mid
         Node slow = head;
-        Node fast = head;
+        Node fast = head.next;
 
         while(fast != null && fast.next != null){
             slow = slow.next;
-            fast = fast.next;
-            
-            if(slow == fast){
-                break;
-            }
-        }
-        slow = head;
-
-        while(slow.next != fast.next){
-            slow = slow.next;
-            fast = fast.next;
+            fast = fast.next.next;
         }
 
-        fast.next = null;
-        
+        Node mid = slow;
+
+        // reverse second half
+        Node prev = null;
+        Node curr = mid.next;
+        mid.next = null;
+        Node next;
+
+
+        while(curr != null){
+            next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+
+        Node left = head;
+        Node right = prev;
+        Node nextL, nextR;
+
+        while(left != null && right != null){
+            nextL = left.next;
+            left.next = right;
+
+            nextR = right.next;
+            right.next = nextL;
+
+            left = nextL;
+            right = nextR;
+
+        }
+         
+        return head;
+
     }
     public static void main(String[] args){
-        LinkedList list = new LinkedList();
 
-        head = list.new Node(3);
-        head.next = list.new Node(5);
-        head.next.next = list.new Node(6);
-        //head.next.next.next = head;
+        LinkedList ll = new LinkedList();
 
-        System.out.println(detectLoop());
+        ll.addFirst(1);
+        ll.addLast(2);
+        ll.addLast(3);
+        ll.addLast(4);
+        ll.addLast(5);
+        ll.addLast(6);
+
+        ll.head = zigZag(ll.head);
+        ll.print(ll.head);
     }
 }

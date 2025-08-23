@@ -70,6 +70,44 @@ public class BST {
         return createBST(merge, 0, merge.size());
     }
 
+    static class Info{
+        boolean isBST;
+        int size;
+        int min;
+        int max;
+
+        public Info(boolean  isBST, int size, int min, int max){
+            this.isBST = isBST;
+            this.size = size;
+            this.min = min;
+            this.max = max;
+        }
+
+    }
+
+    public static int maxValue = 0;
+
+    public static Info maxBST(Node root){
+        if(root == null){
+            return new Info(true, 0, Integer.MIN_VALUE, Integer.MAX_VALUE);
+        }
+        Info leftInfo = maxBST(root.left);
+        Info rightInfo = maxBST(root.right);
+        int size = leftInfo.size + rightInfo.size + 1;
+        int min = Math.max(root.data, Math.max(leftInfo.min, rightInfo.min));
+        int max = Math.min(root.data, Math.min(leftInfo.max, rightInfo.max));
+
+        if(leftInfo.min >= root.data || rightInfo.max <= root.data){
+            return new Info(false, size, min, max);
+        }
+
+        if(leftInfo.isBST && rightInfo.isBST){
+            maxValue = Math.max(maxValue, size);
+            return new Info(true, size, min, max); 
+        }
+
+        return new Info(false, size, min, max);
+    }
 
     public static void main(String[] args) {
         

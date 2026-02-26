@@ -1,5 +1,4 @@
 public class Knapsack_Tabulation{
-
     private static int check(int[] val, int weight[], int W){
             int[][] dp = new int[val.length+1][W+1];
 
@@ -27,7 +26,7 @@ public class Knapsack_Tabulation{
                 }
             }
 
-            return dp[val.length][W];
+        return dp[val.length][W];
 
     }
     public static void main(String args[]){

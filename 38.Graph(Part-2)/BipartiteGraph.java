@@ -13,7 +13,7 @@ public class BipartiteGraph {
             this.dest = d;
         }
     }
-    
+
     private static void createGraph(ArrayList<ArrayList<Edge>> graph){
         graph.get(0).add(new Edge(0, 1));
         graph.get(0).add(new Edge(0, 2));

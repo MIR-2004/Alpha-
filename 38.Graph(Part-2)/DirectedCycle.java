@@ -33,7 +33,6 @@ public class DirectedCycle {
         return false;
     }
 
-
     private static boolean isCycleUtils(ArrayList<ArrayList<Edge>> graph, boolean[] vis, boolean[] stack, int curr){
         vis[curr] = true;
         stack[curr] = true;

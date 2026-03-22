@@ -45,7 +45,6 @@ public class TopologicalSortUsingBFS {
             }
         }
 
-
         while(!q.isEmpty()){
             int curr = q.remove();
             System.out.print(curr+" ");
@@ -60,6 +59,7 @@ public class TopologicalSortUsingBFS {
         }
 
     }
+
     public static void main(String[] arg){
         int v = 6;
         ArrayList<ArrayList<Edge>> graph = new ArrayList<>();

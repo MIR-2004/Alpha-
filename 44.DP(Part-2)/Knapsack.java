@@ -1,0 +1,67 @@
+public class Knapsack {
+    private static int recursiveAns(int[] weight, int[] val, int W, int n, int[][] dp){
+
+        if(n == 0 || W == 0){
+            return 0;
+        }
+
+        if(dp[n][W] != -1){
+            return dp[n][W];
+        }
+
+        if(weight[n-1] <= W){
+
+            int ans1 = val[n - 1] + recursiveAns(weight, val, W - weight[n-1], n - 1, dp);
+
+            int ans2 = recursiveAns(weight, val, W, n-1, dp);
+
+            dp[n][W] = Math.max(ans1, ans2);
+
+            return dp[n][W];
+
+        }else{
+            dp[n][W] = recursiveAns(weight, val, W, n-1, dp);
+            return dp[n][W];
+        } 
+    }
+
+    private static void tabAns(int[] weight, int[] val, int W, int n, int[][] dp){
+
+        for(int i = 1; i < n+1; i++){
+            for(int j = 1; j < W+1; j++){
+                int v = val[i - 1];
+                int w = weight[i - 1];
+
+                if(w <= j){
+                    int inc = v + dp[i - 1][j - w];
+                    int exc = dp[i - 1][j];
+
+                    dp[i][j] = Math.max(inc, exc);
+                }else{
+                    dp[i][j] = dp[i - 1][j];
+                }
+            }
+        }
+
+        System.out.println(dp[n][W]);
+    }
+
+ 
+    public static void main(String[] args) {
+        int[] weight = {2, 5, 1, 3, 4};
+        int[] val = {15, 14, 10, 45, 30};
+        int W = 7;
+
+        int[][] dp = new int[weight.length+1][W+1];
+
+        for(int i = 0; i < weight.length+1; i++){
+            dp[i][0] = 0;
+        }
+        for(int i = 0; i < W+1; i++){
+            dp[0][i] = 0;
+        }
+
+        tabAns(weight, val, W, weight.length, dp);
+
+    }
+}

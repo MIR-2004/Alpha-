@@ -1,16 +1,24 @@
-public class ClimbingStairsTabulation {
-    public static void main(String[] args) {
-        int n = 4;
-        int w[] = new int[n+1];
-        w[0] = 1;
-        w[1] = 1;
-        
-        for(int i = 2; i<w.length; i++){
-            w[i] = w[i-1]+w[i-2];
+import java.util.*;
+
+class ClimbingStairsTabulation {
+
+    private static int countWays(int n){
+        int[] dp = new int[n+1];
+        dp[0] = 1;
+
+        for(int i = 1; i <= n; i++){
+            if(i == 1){
+                dp[i] = dp[i-1] + 0;
+            }else{
+                dp[i] = dp[i-1] + dp[i-2];
+            }
         }
 
-        for (int i = 0; i < w.length; i++) {
-            System.out.print(w[i]+" ");
-        }
+        return dp[n];
+    }
+    public static void main(String[] args){
+        int num = 5;
+
+        System.out.println(countWays(num));
     }
 }

@@ -1,26 +1,29 @@
 import java.util.*;
 
-public class ClimbingStairs {
+class ClimbingStairs {
 
-    public static int ways(int n, int[] w){
+    private static int countWays(int n, int[] ways){
+        if(n == 0){
+            return 1;
+        }
         if(n < 0){
             return 0;
         }
-        if(n == 0){
-            return 1; 
-        }
-        if(w[n] != -1){
-            return w[n];
+
+        if(ways[n] != -1){
+            return ways[n];
         }
 
-        w[n] = ways(n-1, w) + ways(n-2, w);
-
-        return w[n];
+        ways[n] = countWays(n-1, ways) + countWays(n-2, ways) + countWays(n-3, ways) + countWays(n-4, ways);
+        return ways[n];
     }
-    public static void main(String[] args) {
-        int n = 4;
-        int w[] = new int[n+1];
-        Arrays.fill(w, -1);
-        System.out.println(ways(n, w));
+    public static void main(String[] args){
+        int num = 4;
+
+        int ways[] = new int[num+1];
+        
+        Arrays.fill(ways, -1);
+
+        System.out.println(countWays(num, ways));
     }
 }
